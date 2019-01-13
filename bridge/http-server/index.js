@@ -27,8 +27,18 @@ module.exports = (config, controllers) => {
           res.status(200).send('OK');
           break;
 
-        case 'set-hue':
+        case 'set-color':
           controller.exec(commands.setColor(payload.hue, payload.saturation, payload.brightness));
+          res.status(200).send('OK');
+          break;
+
+        case 'set-white':
+          controller.exec(commands.setWhite(payload.temperature, payload.brightness));
+          res.status(200).send('OK');
+          break;
+
+        case 'set-all':
+          controller.exec(commands.setAll(payload.hue, payload.saturation, payload.temperature, payload.brightness));
           res.status(200).send('OK');
           break;
 
