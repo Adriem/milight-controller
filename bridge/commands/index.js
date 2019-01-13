@@ -24,14 +24,9 @@ class LightController {
    * @return { Promise<any> } Promise that will resolve to the
    */
   async exec(...commands) {
-    try {
-      await this.controller.ready();
-      for (let command of commands) command(this.zone, this.controller);
-      return this.controller.close();
-    } catch (err) {
-      await this.controller.close();
-      throw err;
-    }
+    await this.controller.ready();
+    const allCommandsExecuted = commands.map((command) => command(this.zone, this.controller))
+    return Promise.all(allCommandsExecuted)
   }
 }
 
