@@ -21,14 +21,29 @@ module.exports = (program, lightsService, httpServer) => {
   program
     .command('set-color <zone>')
     .description('Turn on the target zone')
-    .option('-h, --hue', 'Hue of the color')
-    .option('-s, --saturation', 'Saturation of the color')
-    .option('-b, --brightness', 'Brightness of the color')
+    .option('-h, --hue <value>', 'Hue of the color')
+    .option('-s, --saturation <value>', 'Saturation of the color')
+    .option('-b, --brightness <value>', 'Brightness of the color')
     .action(withErrorHandling((zoneName, hue, saturation, brightness) =>
       lightsService.setColor(zoneName, {
-        hue: parseInt(hue),
-        saturation: parseInt(saturation),
-        brightness: parseInt(brightness),
+        hue: hue != null ? parseInt(hue) : null,
+        saturation: saturation != null ? parseInt(saturation) : null,
+        brightness: brightness != null ? parseInt(brightness) : null,
+      })));
+
+  program
+    .command('set-all <zone>')
+    .description('Turn on the target zone')
+    .option('-h, --hue <value>', 'Hue of the color')
+    .option('-s, --saturation <value>', 'Saturation of the color')
+    .option('-t, --temperature <value>', 'Hue of the color')
+    .option('-b, --brightness <value>', 'Brightness of the color')
+    .action(withErrorHandling((zoneName, { hue, saturation, temperature, brightness }) =>
+      lightsService.setAll(zoneName, {
+        hue: hue != null ? parseInt(hue) : null,
+        saturation: saturation != null ? parseInt(saturation) : null,
+        temperature: temperature != null ? parseInt(temperature) : null,
+        brightness: brightness != null ? parseInt(brightness) : null,
       })));
 
   function withErrorHandling (action) {
