@@ -143,10 +143,14 @@ function handleSendCommand (lightsService) {
 }
 
 module.exports = (lightsService) => {
-  return express()
-    .use(morgan('dev'))
+  morgan.token('body', req => JSON.stringify(req.body))
+
+  const app = express()
     .use(bodyParser.json())
+    .use(morgan(':method :url :status :response-time ms - :body'))
     .get('/', (req, res) => res.status(200).send())
     .get('/zones/:zoneName/command', handleDescribeCommands())
     .post('/zones/:zoneName/command', handleSendCommand(lightsService))
+
+  return app
 };

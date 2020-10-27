@@ -4,7 +4,7 @@ const { LightServiceFullRgbV6 } = require('./lights-service');
 const setupCliController = require('./cli-controller');
 const setupHttpController = require('./http-controller');
 
-const BRIDGE_IP   = '192.168.1.79';
+const BRIDGE_IP   = '192.168.1.150';
 const BRIDGE_PORT = 5987;
 
 const milightController = new MilightController({ ip: BRIDGE_IP, port: BRIDGE_PORT, type: 'v6' });
